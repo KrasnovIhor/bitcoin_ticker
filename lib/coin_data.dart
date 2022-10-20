@@ -1,3 +1,6 @@
+const kAPIkey = 'MDQ5OGFiYTJhYjg2NDBjMTg5Yjk0MDFiMGI4YzQ0MGM';
+const kBitcoinAverageURL = 'https://apiv2.bitcoinaverage.com/indices';
+
 const List<String> currenciesList = [
   'AUD',
   'BRL',
@@ -15,9 +18,9 @@ const List<String> currenciesList = [
   'NZD',
   'PLN',
   'RON',
-  'RUB',
   'SEK',
   'SGD',
+  'UAH',
   'USD',
   'ZAR'
 ];
@@ -28,4 +31,9 @@ const List<String> cryptoList = [
   'LTC',
 ];
 
-class CoinData {}
+class CoinData {
+  CoinData({required this.crypto, required this.currency});
+
+  late String crypto;
+  late String currency;
+}
