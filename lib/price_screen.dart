@@ -16,8 +16,8 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   String selectedCurrency = currenciesList.first;
   TickerModel tickerModel = TickerModel();
-  late Map<String, int>? values = {};
-  bool isLoading = true;
+  Map<String, int> values = {};
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -27,17 +27,18 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   void getData() async {
+    setState(() {
+      isLoading = true;
+    });
+
     try {
-      setState(() {
-        isLoading = true;
-      });
-      Map<String, int> data = await tickerModel.getTickerData(
+      var data = await tickerModel.getTickerData(
         selectedCurrency,
       );
+      isLoading = false;
 
       setState(() {
         values = data;
-        isLoading = false;
       });
     } catch (e) {
       print(e);
@@ -93,14 +94,14 @@ class _PriceScreenState extends State<PriceScreen> {
     );
   }
 
-  Widget tickerCards() => Column(
+  Column tickerCards() => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: cryptoList
             .map(
               (cryptoItem) => CryptoCard(
                 cryptoCurrency: cryptoItem,
                 selectedCurrency: selectedCurrency,
-                value: isLoading ? null : values?[cryptoItem],
+                value: isLoading ? null : values[cryptoItem],
               ),
             )
             .toList(),
